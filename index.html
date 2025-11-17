@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Learning Game for Kids!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6b6b;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 0 #ffd93d;
+        }
+
+        .game-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .game-btn {
+            padding: 30px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-btn:active {
+            transform: scale(0.98);
+        }
+
+        .color-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .number-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .letter-btn {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .shape-btn {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+
+        .math-btn {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .abc-btn {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .game-area {
+            display: none;
+            min-height: 400px;
+        }
+
+        .game-area.active {
+            display: block;
+        }
+
+        .back-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Color Game */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .color-box {
+            aspect-ratio: 1;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 5px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .color-box:hover {
+            transform: scale(1.1);
+            border-color: white;
+        }
+
+        /* Number Game */
+        .number-display {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .number-display h2 {
+            font-size: 3em;
+            color: #4facfe;
+            margin-bottom: 20px;
+        }
+
+        .objects-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .object {
+            font-size: 4em;
+            animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .number-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .number-btn-choice {
+            padding: 30px;
+            font-size: 2em;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #2d3436;
+            transition: transform 0.2s;
+        }
+
+        .number-btn-choice:hover {
+            transform: scale(1.1);
+        }
+
+        .number-btn-choice.correct {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+            animation: pulse 0.5s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Letter Game */
+        .letter-display {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .letter-card {
+            display: inline-block;
+            padding: 40px 60px;
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        .letter-card h2 {
+            font-size: 5em;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .letter-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            max-width: 700px;
+            margin: 30px auto;
+        }
+
+        .letter-btn-choice {
+            padding: 25px;
+            font-size: 2em;
+            background: linear-gradient(135deg, #fab1a0 0%, #ff7675 100%);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            transition: transform 0.2s;
+        }
+
+        .letter-btn-choice:hover {
+            transform: scale(1.1);
+        }
+
+        .letter-btn-choice.correct {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+            animation: pulse 0.5s;
+        }
+
+        /* Shape Game */
+        .shape-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .shape-box {
+            aspect-ratio: 1;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 5px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            position: relative;
+        }
+
+        .shape-box:hover {
+            transform: scale(1.1);
+            border-color: #ff6b6b;
+        }
+
+        .shape-box.correct {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+            animation: pulse 0.5s;
+        }
+
+        .shape-visual {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .shape-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2d3436;
+        }
+
+        /* Math Game */
+        .math-problem {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .math-problem h2 {
+            font-size: 4em;
+            color: #e67e22;
+            margin: 20px 0;
+        }
+
+        .math-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        .math-btn-choice {
+            padding: 30px;
+            font-size: 2em;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #2d3436;
+            transition: transform 0.2s;
+        }
+
+        .math-btn-choice:hover {
+            transform: scale(1.1);
+        }
+
+        .math-btn-choice.correct {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+            animation: pulse 0.5s;
+        }
+
+        /* ABC Video */
+        .abc-video-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .abc-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 30px;
+            padding: 60px;
+            margin: 30px auto;
+            max-width: 600px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .abc-letter {
+            font-size: 8em;
+            color: white;
+            font-weight: bold;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            animation: letterPop 0.5s ease;
+            margin: 20px 0;
+        }
+
+        @keyframes letterPop {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .abc-word {
+            font-size: 2.5em;
+            color: #ffd93d;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .abc-emoji {
+            font-size: 5em;
+            animation: emojiFloat 2s ease-in-out infinite;
+            margin: 20px 0;
+        }
+
+        @keyframes emojiFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .abc-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .abc-control-btn {
+            padding: 20px 40px;
+            font-size: 1.5em;
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #2d3436;
+            transition: transform 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .abc-control-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .abc-control-btn:active {
+            transform: scale(0.95);
+        }
+
+        .abc-control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .abc-progress {
+            margin: 20px 0;
+            font-size: 1.5em;
+            color: #2d3436;
+            font-weight: bold;
+        }
+
+        .feedback {
+            text-align: center;
+            font-size: 2em;
+            margin: 20px 0;
+            min-height: 50px;
+            color: #2d3436;
+            font-weight: bold;
+        }
+
+        .celebration {
+            font-size: 3em;
+            animation: celebrate 1s ease;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(0) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .object {
+                font-size: 3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌈 Fun Learning! 🎨</h1>
+
+        <!-- Game Selection Menu -->
+        <div id="menu" class="game-selector">
+            <button class="game-btn color-btn" onclick="startGame('colors')">
+                🎨 Colors
+            </button>
+            <button class="game-btn number-btn" onclick="startGame('numbers')">
+                🔢 Numbers
+            </button>
+            <button class="game-btn letter-btn" onclick="startGame('letters')">
+                🔤 Letters
+            </button>
+            <button class="game-btn shape-btn" onclick="startGame('shapes')">
+                ⭐ Shapes
+            </button>
+            <button class="game-btn math-btn" onclick="startGame('math')">
+                ➕ Math
+            </button>
+            <button class="game-btn abc-btn" onclick="startGame('abc')">
+                🎵 ABC Song
+            </button>
+        </div>
+
+        <!-- Color Game -->
+        <div id="color-game" class="game-area">
+            <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="feedback" id="color-feedback"></div>
+            <div class="color-grid" id="color-grid"></div>
+        </div>
+
+        <!-- Number Game -->
+        <div id="number-game" class="game-area">
+            <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="feedback" id="number-feedback"></div>
+            <div class="number-display">
+                <h2>How many do you see?</h2>
+                <div class="objects-container" id="objects-container"></div>
+            </div>
+            <div class="number-buttons" id="number-buttons"></div>
+        </div>
+
+        <!-- Letter Game -->
+        <div id="letter-game" class="game-area">
+            <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="feedback" id="letter-feedback"></div>
+            <div class="letter-display">
+                <h2>Find the letter:</h2>
+                <div class="letter-card">
+                    <h2 id="target-letter">A</h2>
+                </div>
+            </div>
+            <div class="letter-buttons" id="letter-buttons"></div>
+        </div>
+
+        <!-- Shape Game -->
+        <div id="shape-game" class="game-area">
+            <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="feedback" id="shape-feedback"></div>
+            <div class="shape-grid" id="shape-grid"></div>
+        </div>
+
+        <!-- Math Game -->
+        <div id="math-game" class="game-area">
+            <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="feedback" id="math-feedback"></div>
+            <div class="math-problem">
+                <h2 id="math-question">2 + 1 = ?</h2>
+            </div>
+            <div class="math-buttons" id="math-buttons"></div>
+        </div>
+
+        <!-- ABC Video -->
+        <div id="abc-video" class="game-area">
+            <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="abc-video-container">
+                <div class="abc-progress" id="abc-progress">Letter 1 of 26</div>
+                <div class="abc-display">
+                    <div class="abc-letter" id="abc-letter">A</div>
+                    <div class="abc-word" id="abc-word">Apple</div>
+                    <div class="abc-emoji" id="abc-emoji">🍎</div>
+                </div>
+                <div class="abc-controls">
+                    <button class="abc-control-btn" id="abc-prev" onclick="previousLetter()">⏮ Previous</button>
+                    <button class="abc-control-btn" id="abc-play" onclick="togglePlay()">▶ Play</button>
+                    <button class="abc-control-btn" id="abc-next" onclick="nextLetter()">Next ⏭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Text-to-Speech function
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.8;
+                utterance.pitch = 1.2;
+                utterance.volume = 1;
+
+                // Select a female voice
+                const voices = speechSynthesis.getVoices();
+                const femaleVoice = voices.find(voice =>
+                    voice.name.toLowerCase().includes('female') ||
+                    voice.name.toLowerCase().includes('zira') ||
+                    voice.name.toLowerCase().includes('samantha') ||
+                    voice.name.toLowerCase().includes('victoria') ||
+                    voice.name.toLowerCase().includes('karen') ||
+                    voice.name.toLowerCase().includes('moira') ||
+                    voice.name.toLowerCase().includes('fiona') ||
+                    voice.name.toLowerCase().includes('google us english') && voice.name.toLowerCase().includes('female')
+                );
+
+                if (femaleVoice) {
+                    utterance.voice = femaleVoice;
+                }
+
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Show feedback with animation
+        function showFeedback(elementId, message, isCorrect) {
+            const feedback = document.getElementById(elementId);
+            feedback.textContent = isCorrect ? '🎉 ' + message + ' 🎉' : message;
+            feedback.className = isCorrect ? 'feedback celebration' : 'feedback';
+
+            if (isCorrect) {
+                setTimeout(() => {
+                    feedback.textContent = '';
+                    feedback.className = 'feedback';
+                }, 2000);
+            }
+        }
+
+        // Game navigation
+        function startGame(gameType) {
+            document.getElementById('menu').style.display = 'none';
+            document.getElementById('color-game').classList.remove('active');
+            document.getElementById('number-game').classList.remove('active');
+            document.getElementById('letter-game').classList.remove('active');
+            document.getElementById('shape-game').classList.remove('active');
+            document.getElementById('math-game').classList.remove('active');
+            document.getElementById('abc-video').classList.remove('active');
+
+            if (gameType === 'colors') {
+                document.getElementById('color-game').classList.add('active');
+                initColorGame();
+            } else if (gameType === 'numbers') {
+                document.getElementById('number-game').classList.add('active');
+                initNumberGame();
+            } else if (gameType === 'letters') {
+                document.getElementById('letter-game').classList.add('active');
+                initLetterGame();
+            } else if (gameType === 'shapes') {
+                document.getElementById('shape-game').classList.add('active');
+                initShapeGame();
+            } else if (gameType === 'math') {
+                document.getElementById('math-game').classList.add('active');
+                initMathGame();
+            } else if (gameType === 'abc') {
+                document.getElementById('abc-video').classList.add('active');
+                initABCVideo();
+            }
+        }
+
+        function backToMenu() {
+            document.getElementById('menu').style.display = 'grid';
+            document.getElementById('color-game').classList.remove('active');
+            document.getElementById('number-game').classList.remove('active');
+            document.getElementById('letter-game').classList.remove('active');
+            document.getElementById('shape-game').classList.remove('active');
+            document.getElementById('math-game').classList.remove('active');
+            document.getElementById('abc-video').classList.remove('active');
+
+            // Stop ABC video if it's playing
+            if (abcInterval) {
+                clearInterval(abcInterval);
+                abcInterval = null;
+            }
+            if (isPlaying) {
+                isPlaying = false;
+                stopABCSong();
+            }
+
+            speak('Pick a game!');
+        }
+
+        // COLOR GAME
+        const colors = [
+            { name: 'Red', value: '#e74c3c' },
+            { name: 'Blue', value: '#3498db' },
+            { name: 'Yellow', value: '#f1c40f' },
+            { name: 'Green', value: '#2ecc71' },
+            { name: 'Orange', value: '#e67e22' },
+            { name: 'Purple', value: '#9b59b6' },
+            { name: 'Pink', value: '#fd79a8' },
+            { name: 'Brown', value: '#8b4513' }
+        ];
+
+        let targetColor = null;
+
+        function initColorGame() {
+            generateColorQuestion();
+        }
+
+        function generateColorQuestion() {
+            // Pick a random target color
+            targetColor = colors[Math.floor(Math.random() * colors.length)];
+
+            // Select 6 random colors including the target
+            const selectedColors = [targetColor];
+            while (selectedColors.length < 6) {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                if (!selectedColors.find(c => c.name === randomColor.name)) {
+                    selectedColors.push(randomColor);
+                }
+            }
+
+            // Shuffle the colors
+            selectedColors.sort(() => Math.random() - 0.5);
+
+            const grid = document.getElementById('color-grid');
+            grid.innerHTML = '';
+
+            selectedColors.forEach(color => {
+                const box = document.createElement('div');
+                box.className = 'color-box';
+                box.style.backgroundColor = color.value;
+                box.textContent = color.name;
+                box.onclick = () => checkColorAnswer(color.name, box);
+                grid.appendChild(box);
+            });
+
+            setTimeout(() => speak(`Find the color ${targetColor.name}`), 500);
+        }
+
+        function checkColorAnswer(answer, box) {
+            if (answer === targetColor.name) {
+                box.classList.add('correct');
+                speak(`Yes! ${targetColor.name}! Great job!`);
+                showFeedback('color-feedback', 'Correct!', true);
+                setTimeout(() => {
+                    // Remove correct class before generating new question
+                    box.classList.remove('correct');
+                    generateColorQuestion();
+                }, 2000);
+            } else {
+                speak('Try again!');
+                showFeedback('color-feedback', 'Try again! 😊', false);
+            }
+        }
+
+        // NUMBER GAME
+        const emojis = ['🐶', '🐱', '🦊', '🐻', '🐼', '🐨', '🐸', '🦁', '🐯', '🐮'];
+        let currentNumber = 0;
+        let currentEmoji = '';
+
+        function initNumberGame() {
+            generateNumberQuestion();
+        }
+
+        function generateNumberQuestion() {
+            currentNumber = Math.floor(Math.random() * 5) + 1; // 1-5
+            currentEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+
+            const container = document.getElementById('objects-container');
+            container.innerHTML = '';
+
+            for (let i = 0; i < currentNumber; i++) {
+                const obj = document.createElement('div');
+                obj.className = 'object';
+                obj.textContent = currentEmoji;
+                obj.style.animationDelay = `${i * 0.1}s`;
+                container.appendChild(obj);
+            }
+
+            const buttonsContainer = document.getElementById('number-buttons');
+            buttonsContainer.innerHTML = '';
+
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'number-btn-choice';
+                btn.textContent = i;
+                btn.onclick = () => checkNumberAnswer(i, btn);
+                buttonsContainer.appendChild(btn);
+            }
+
+            setTimeout(() => speak(`How many ${currentEmoji} do you see?`), 500);
+        }
+
+        function checkNumberAnswer(answer, button) {
+            if (answer === currentNumber) {
+                button.classList.add('correct');
+                speak(`Yes! ${currentNumber}! Great job!`);
+                showFeedback('number-feedback', 'Correct!', true);
+                setTimeout(generateNumberQuestion, 2000);
+            } else {
+                speak('Try again!');
+                showFeedback('number-feedback', 'Try again! 😊', false);
+            }
+        }
+
+        // LETTER GAME
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        let targetLetter = '';
+
+        function initLetterGame() {
+            generateLetterQuestion();
+        }
+
+        function generateLetterQuestion() {
+            targetLetter = letters[Math.floor(Math.random() * letters.length)];
+            document.getElementById('target-letter').textContent = targetLetter;
+
+            const options = [targetLetter];
+            while (options.length < 6) {
+                const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                if (!options.includes(randomLetter)) {
+                    options.push(randomLetter);
+                }
+            }
+
+            // Shuffle options
+            options.sort(() => Math.random() - 0.5);
+
+            const buttonsContainer = document.getElementById('letter-buttons');
+            buttonsContainer.innerHTML = '';
+
+            options.forEach(letter => {
+                const btn = document.createElement('button');
+                btn.className = 'letter-btn-choice';
+                btn.textContent = letter;
+                btn.onclick = () => checkLetterAnswer(letter, btn);
+                buttonsContainer.appendChild(btn);
+            });
+
+            setTimeout(() => speak(`Find the letter ${targetLetter}`), 500);
+        }
+
+        function checkLetterAnswer(answer, button) {
+            if (answer === targetLetter) {
+                button.classList.add('correct');
+                speak(`Excellent! ${targetLetter}!`);
+                showFeedback('letter-feedback', 'Amazing!', true);
+                setTimeout(generateLetterQuestion, 2000);
+            } else {
+                speak('Not quite! Try again!');
+                showFeedback('letter-feedback', 'Try again! 😊', false);
+            }
+        }
+
+        // SHAPE GAME
+        const shapes = [
+            { name: 'Circle', svg: '<circle cx="40" cy="40" r="35" fill="#ff6b6b"/>' },
+            { name: 'Square', svg: '<rect x="10" y="10" width="60" height="60" fill="#4ecdc4"/>' },
+            { name: 'Triangle', svg: '<polygon points="40,10 70,60 10,60" fill="#ffe66d"/>' },
+            { name: 'Star', svg: '<polygon points="40,5 48,30 75,30 53,45 60,70 40,55 20,70 27,45 5,30 32,30" fill="#a8e6cf"/>' },
+            { name: 'Heart', svg: '<path d="M40,70 C40,70 10,50 10,35 C10,25 15,20 22,20 C30,20 35,25 40,32 C45,25 50,20 58,20 C65,20 70,25 70,35 C70,50 40,70 40,70 Z" fill="#ff6b9d"/>' },
+            { name: 'Diamond', svg: '<polygon points="40,10 70,40 40,70 10,40" fill="#c7ceea"/>' }
+        ];
+
+        let targetShape = null;
+
+        function initShapeGame() {
+            generateShapeQuestion();
+        }
+
+        function generateShapeQuestion() {
+            targetShape = shapes[Math.floor(Math.random() * shapes.length)];
+
+            const grid = document.getElementById('shape-grid');
+            grid.innerHTML = '';
+
+            shapes.forEach(shape => {
+                const box = document.createElement('div');
+                box.className = 'shape-box';
+
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('class', 'shape-visual');
+                svg.setAttribute('viewBox', '0 0 80 80');
+                svg.innerHTML = shape.svg;
+
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'shape-name';
+                nameDiv.textContent = shape.name;
+
+                box.appendChild(svg);
+                box.appendChild(nameDiv);
+                box.onclick = () => checkShapeAnswer(shape.name, box);
+                grid.appendChild(box);
+            });
+
+            setTimeout(() => speak(`Find the ${targetShape.name}`), 500);
+        }
+
+        function checkShapeAnswer(answer, box) {
+            if (answer === targetShape.name) {
+                box.classList.add('correct');
+                speak(`Perfect! ${targetShape.name}! Well done!`);
+                showFeedback('shape-feedback', 'Correct!', true);
+                setTimeout(() => {
+                    box.classList.remove('correct');
+                    generateShapeQuestion();
+                }, 2000);
+            } else {
+                speak('Try again!');
+                showFeedback('shape-feedback', 'Try again! 😊', false);
+            }
+        }
+
+        // MATH GAME
+        let num1 = 0;
+        let num2 = 0;
+        let correctAnswer = 0;
+        let mathOperation = '+';
+
+        function initMathGame() {
+            generateMathQuestion();
+        }
+
+        function generateMathQuestion() {
+            // Simple addition and subtraction for ages 1-5
+            const useAddition = Math.random() > 0.3; // 70% addition, 30% subtraction
+
+            if (useAddition) {
+                num1 = Math.floor(Math.random() * 5) + 1; // 1-5
+                num2 = Math.floor(Math.random() * 5) + 1; // 1-5
+                mathOperation = '+';
+                correctAnswer = num1 + num2;
+            } else {
+                // For subtraction, ensure result is positive
+                num1 = Math.floor(Math.random() * 5) + 3; // 3-7
+                num2 = Math.floor(Math.random() * num1) + 1; // 1 to num1
+                mathOperation = '-';
+                correctAnswer = num1 - num2;
+            }
+
+            document.getElementById('math-question').textContent = `${num1} ${mathOperation} ${num2} = ?`;
+
+            // Generate answer options
+            const options = [correctAnswer];
+            while (options.length < 6) {
+                const wrongAnswer = Math.floor(Math.random() * 10) + 1;
+                if (!options.includes(wrongAnswer) && wrongAnswer !== correctAnswer) {
+                    options.push(wrongAnswer);
+                }
+            }
+
+            // Shuffle options
+            options.sort(() => Math.random() - 0.5);
+
+            const buttonsContainer = document.getElementById('math-buttons');
+            buttonsContainer.innerHTML = '';
+
+            options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'math-btn-choice';
+                btn.textContent = option;
+                btn.onclick = () => checkMathAnswer(option, btn);
+                buttonsContainer.appendChild(btn);
+            });
+
+            setTimeout(() => speak(`What is ${num1} ${mathOperation === '+' ? 'plus' : 'minus'} ${num2}?`), 500);
+        }
+
+        function checkMathAnswer(answer, button) {
+            if (answer === correctAnswer) {
+                button.classList.add('correct');
+                speak(`Yes! ${correctAnswer}! Excellent!`);
+                showFeedback('math-feedback', 'Correct!', true);
+                setTimeout(generateMathQuestion, 2000);
+            } else {
+                speak('Try again!');
+                showFeedback('math-feedback', 'Try again! 😊', false);
+            }
+        }
+
+        // ABC VIDEO
+        const abcData = [
+            { letter: 'A', word: 'Apple', emoji: '🍎' },
+            { letter: 'B', word: 'Ball', emoji: '⚽' },
+            { letter: 'C', word: 'Cat', emoji: '🐱' },
+            { letter: 'D', word: 'Dog', emoji: '🐶' },
+            { letter: 'E', word: 'Elephant', emoji: '🐘' },
+            { letter: 'F', word: 'Fish', emoji: '🐠' },
+            { letter: 'G', word: 'Grapes', emoji: '🍇' },
+            { letter: 'H', word: 'House', emoji: '🏠' },
+            { letter: 'I', word: 'Ice Cream', emoji: '🍦' },
+            { letter: 'J', word: 'Jump', emoji: '🤸' },
+            { letter: 'K', word: 'Kite', emoji: '🪁' },
+            { letter: 'L', word: 'Lion', emoji: '🦁' },
+            { letter: 'M', word: 'Monkey', emoji: '🐵' },
+            { letter: 'N', word: 'Nest', emoji: '🪺' },
+            { letter: 'O', word: 'Orange', emoji: '🍊' },
+            { letter: 'P', word: 'Pizza', emoji: '🍕' },
+            { letter: 'Q', word: 'Queen', emoji: '👸' },
+            { letter: 'R', word: 'Rainbow', emoji: '🌈' },
+            { letter: 'S', word: 'Sun', emoji: '☀️' },
+            { letter: 'T', word: 'Tree', emoji: '🌳' },
+            { letter: 'U', word: 'Umbrella', emoji: '☂️' },
+            { letter: 'V', word: 'Volcano', emoji: '🌋' },
+            { letter: 'W', word: 'Watermelon', emoji: '🍉' },
+            { letter: 'X', word: 'Xylophone', emoji: '🎵' },
+            { letter: 'Y', word: 'Yo-yo', emoji: '🪀' },
+            { letter: 'Z', word: 'Zebra', emoji: '🦓' }
+        ];
+
+        let currentLetterIndex = 0;
+        let isPlaying = false;
+        let abcInterval = null;
+        let audioContext = null;
+        let musicInterval = null;
+
+        // ABC Song melody and lyrics timing
+        const abcSong = [
+            { note: 261.63, duration: 0.5, lyric: 'A' },
+            { note: 261.63, duration: 0.5, lyric: 'B' },
+            { note: 392.00, duration: 0.5, lyric: 'C' },
+            { note: 392.00, duration: 0.5, lyric: 'D' },
+            { note: 440.00, duration: 0.5, lyric: 'E' },
+            { note: 440.00, duration: 0.5, lyric: 'F' },
+            { note: 392.00, duration: 1.0, lyric: 'G' },
+            { note: 349.23, duration: 0.5, lyric: 'H' },
+            { note: 349.23, duration: 0.5, lyric: 'I' },
+            { note: 329.63, duration: 0.5, lyric: 'J' },
+            { note: 329.63, duration: 0.5, lyric: 'K' },
+            { note: 293.66, duration: 0.5, lyric: 'L' },
+            { note: 293.66, duration: 0.5, lyric: 'M' },
+            { note: 261.63, duration: 0.5, lyric: 'N' },
+            { note: 261.63, duration: 0.5, lyric: 'O' },
+            { note: 261.63, duration: 1.0, lyric: 'P' },
+            { note: 392.00, duration: 0.5, lyric: 'Q' },
+            { note: 392.00, duration: 0.5, lyric: 'R' },
+            { note: 349.23, duration: 0.5, lyric: 'S' },
+            { note: 349.23, duration: 0.5, lyric: 'T' },
+            { note: 329.63, duration: 0.5, lyric: 'U' },
+            { note: 329.63, duration: 1.0, lyric: 'V' },
+            { note: 293.66, duration: 1.0, lyric: 'W' },
+            { note: 392.00, duration: 0.5, lyric: 'X' },
+            { note: 392.00, duration: 0.5, lyric: 'Y' },
+            { note: 349.23, duration: 0.5, lyric: 'and' },
+            { note: 349.23, duration: 1.0, lyric: 'Z' },
+            { note: 261.63, duration: 0.5, lyric: '' },
+            { note: 261.63, duration: 0.5, lyric: '' },
+            { note: 392.00, duration: 0.5, lyric: '' },
+            { note: 392.00, duration: 0.5, lyric: '' },
+            { note: 440.00, duration: 0.5, lyric: '' },
+            { note: 440.00, duration: 0.5, lyric: '' },
+            { note: 392.00, duration: 1.0, lyric: '' },
+            { note: 349.23, duration: 0.5, lyric: '' },
+            { note: 349.23, duration: 0.5, lyric: '' },
+            { note: 329.63, duration: 0.5, lyric: '' },
+            { note: 329.63, duration: 0.5, lyric: '' },
+            { note: 293.66, duration: 0.5, lyric: '' },
+            { note: 293.66, duration: 0.5, lyric: '' },
+            { note: 261.63, duration: 1.5, lyric: '' }
+        ];
+
+        function playNote(frequency, duration) {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine';
+
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        function playABCSong() {
+            let noteIndex = 0;
+            let currentTime = 0;
+
+            function playNext() {
+                if (noteIndex < abcSong.length && isPlaying) {
+                    const item = abcSong[noteIndex];
+
+                    // Play the note
+                    playNote(item.note, item.duration);
+
+                    // Update visual display for letters only (no voice)
+                    if (item.lyric) {
+                        const letterIndex = item.lyric.charCodeAt(0) - 65; // A=0, B=1, etc.
+                        if (letterIndex >= 0 && letterIndex < 26) {
+                            currentLetterIndex = letterIndex;
+                            const data = abcData[letterIndex];
+
+                            const letterEl = document.getElementById('abc-letter');
+                            const wordEl = document.getElementById('abc-word');
+                            const emojiEl = document.getElementById('abc-emoji');
+
+                            letterEl.style.animation = 'none';
+                            setTimeout(() => {
+                                letterEl.textContent = data.letter;
+                                wordEl.textContent = data.word;
+                                emojiEl.textContent = data.emoji;
+                                letterEl.style.animation = 'letterPop 0.5s ease';
+                                document.getElementById('abc-progress').textContent = `Letter ${letterIndex + 1} of 26`;
+                            }, 10);
+                        }
+                    }
+
+                    noteIndex++;
+                    currentTime += item.duration * 1000;
+
+                    if (noteIndex < abcSong.length) {
+                        musicInterval = setTimeout(playNext, item.duration * 1000);
+                    } else {
+                        // Song finished
+                        setTimeout(() => {
+                            isPlaying = false;
+                            updatePlayButton();
+                            speak('Great job! You learned all your A B C\'s!');
+                        }, 1000);
+                    }
+                }
+            }
+
+            playNext();
+        }
+
+        function stopABCSong() {
+            if (musicInterval) {
+                clearTimeout(musicInterval);
+                musicInterval = null;
+            }
+        }
+
+        function initABCVideo() {
+            currentLetterIndex = 0;
+            isPlaying = false;
+            if (abcInterval) {
+                clearInterval(abcInterval);
+                abcInterval = null;
+            }
+            stopABCSong();
+            displayLetter(0, false); // Don't speak on init
+            updatePlayButton();
+            setTimeout(() => speak('Let\'s learn the A B C\'s! Press play to start!'), 200);
+        }
+
+        function displayLetter(index, shouldSpeak = true) {
+            const data = abcData[index];
+
+            // Re-trigger animation by removing and re-adding the element
+            const letterEl = document.getElementById('abc-letter');
+            const wordEl = document.getElementById('abc-word');
+            const emojiEl = document.getElementById('abc-emoji');
+
+            letterEl.style.animation = 'none';
+            setTimeout(() => {
+                letterEl.textContent = data.letter;
+                wordEl.textContent = data.word;
+                emojiEl.textContent = data.emoji;
+                letterEl.style.animation = 'letterPop 0.5s ease';
+            }, 10);
+
+            document.getElementById('abc-progress').textContent = `Letter ${index + 1} of 26`;
+
+            // Update button states
+            document.getElementById('abc-prev').disabled = index === 0;
+            document.getElementById('abc-next').disabled = index === 25;
+
+            // Speak the letter and word only if shouldSpeak is true
+            if (shouldSpeak) {
+                setTimeout(() => {
+                    speak(`${data.letter}. ${data.letter} is for ${data.word}`);
+                }, 300);
+            }
+        }
+
+        function nextLetter() {
+            if (currentLetterIndex < 25) {
+                currentLetterIndex++;
+                displayLetter(currentLetterIndex);
+            }
+        }
+
+        function previousLetter() {
+            if (currentLetterIndex > 0) {
+                currentLetterIndex--;
+                displayLetter(currentLetterIndex);
+            }
+        }
+
+        function togglePlay() {
+            isPlaying = !isPlaying;
+            updatePlayButton();
+
+            if (isPlaying) {
+                // Start the ABC song with synchronized music and voice
+                playABCSong();
+            } else {
+                // Pause
+                stopABCSong();
+            }
+        }
+
+        function updatePlayButton() {
+            const playBtn = document.getElementById('abc-play');
+            if (isPlaying) {
+                playBtn.textContent = '⏸ Pause';
+            } else {
+                playBtn.textContent = '▶ Play';
+            }
+        }
+
+        // Initial greeting
+        window.onload = () => {
+            speak('Welcome to Fun Learning! Pick a game!');
+        };
+    </script>
+</body>
+</html>
