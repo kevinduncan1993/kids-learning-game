@@ -442,6 +442,124 @@
             font-weight: bold;
         }
 
+        /* Difficulty Selector */
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .difficulty-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .difficulty-btn.easy {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+            color: white;
+        }
+
+        .difficulty-btn.medium {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            color: #2d3436;
+        }
+
+        .difficulty-btn.hard {
+            background: linear-gradient(135deg, #fab1a0 0%, #e17055 100%);
+            color: white;
+        }
+
+        .difficulty-btn.selected {
+            box-shadow: 0 0 0 4px #6c5ce7;
+            transform: scale(1.08);
+        }
+
+        /* Scoreboard & Timer */
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .score-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timer-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timer-display.warning {
+            color: #ffeaa7;
+            animation: timerPulse 0.5s ease infinite;
+        }
+
+        .timer-display.danger {
+            color: #ff7675;
+            animation: timerPulse 0.3s ease infinite;
+        }
+
+        @keyframes timerPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Win/Lose Popup */
+        .popup-win {
+            background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+        }
+
+        .popup-lose {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+        }
+
+        .popup-win h2, .popup-lose h2 {
+            color: white;
+        }
+
+        .popup-win p, .popup-lose p {
+            color: white;
+        }
+
+        .play-again-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: white;
+            color: #2d3436;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .play-again-btn:hover {
+            transform: scale(1.05);
+        }
+
         .celebration {
             font-size: 3em;
             animation: celebrate 1s ease;
@@ -453,7 +571,133 @@
             100% { transform: scale(1) rotate(360deg); }
         }
 
+        /* Instruction text */
+        .instruction {
+            text-align: center;
+            font-size: 1.8em;
+            color: #6c5ce7;
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+            border-radius: 15px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Popup Modal */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+        }
+
+        .popup {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            max-width: 350px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: popIn 0.4s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .popup-success {
+            background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+        }
+
+        .popup-error {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+        }
+
+        .popup h2 {
+            font-size: 2.5em;
+            margin: 10px 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .popup-error h2 {
+            color: #2d3436;
+        }
+
+        .popup .emoji {
+            font-size: 4em;
+            margin: 15px 0;
+        }
+
+        .popup p {
+            font-size: 1.3em;
+            color: white;
+            margin: 10px 0;
+        }
+
+        .popup-error p {
+            color: #2d3436;
+        }
+
+        /* Confetti */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
         @media (max-width: 600px) {
+            .difficulty-selector {
+                gap: 8px;
+            }
+
+            .difficulty-btn {
+                padding: 12px 18px;
+                font-size: 1em;
+            }
+
+            .game-stats {
+                padding: 10px 15px;
+                font-size: 1.1em;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .play-again-btn {
+                padding: 12px 24px;
+                font-size: 1em;
+            }
+
             h1 {
                 font-size: 1.6em;
                 margin-bottom: 15px;
@@ -648,6 +892,15 @@
         <!-- Color Game -->
         <div id="color-game" class="game-area">
             <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="difficulty-selector" id="color-difficulty">
+                <button class="difficulty-btn easy" onclick="setDifficulty('color', 'easy')">Easy</button>
+                <button class="difficulty-btn medium" onclick="setDifficulty('color', 'medium')">Medium</button>
+                <button class="difficulty-btn hard" onclick="setDifficulty('color', 'hard')">Hard</button>
+            </div>
+            <div class="game-stats" id="color-stats" style="display: none;">
+                <div class="score-display">⭐ Score: <span id="color-score">0</span> / <span id="color-target">5</span></div>
+                <div class="timer-display" id="color-timer-container">⏱️ <span id="color-timer">60</span>s</div>
+            </div>
             <div class="feedback" id="color-feedback"></div>
             <div class="color-grid" id="color-grid"></div>
         </div>
@@ -655,6 +908,15 @@
         <!-- Number Game -->
         <div id="number-game" class="game-area">
             <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="difficulty-selector" id="number-difficulty">
+                <button class="difficulty-btn easy" onclick="setDifficulty('number', 'easy')">Easy</button>
+                <button class="difficulty-btn medium" onclick="setDifficulty('number', 'medium')">Medium</button>
+                <button class="difficulty-btn hard" onclick="setDifficulty('number', 'hard')">Hard</button>
+            </div>
+            <div class="game-stats" id="number-stats" style="display: none;">
+                <div class="score-display">⭐ Score: <span id="number-score">0</span> / <span id="number-target">5</span></div>
+                <div class="timer-display" id="number-timer-container">⏱️ <span id="number-timer">60</span>s</div>
+            </div>
             <div class="feedback" id="number-feedback"></div>
             <div class="number-display">
                 <h2>How many do you see?</h2>
@@ -666,6 +928,15 @@
         <!-- Letter Game -->
         <div id="letter-game" class="game-area">
             <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="difficulty-selector" id="letter-difficulty">
+                <button class="difficulty-btn easy" onclick="setDifficulty('letter', 'easy')">Easy</button>
+                <button class="difficulty-btn medium" onclick="setDifficulty('letter', 'medium')">Medium</button>
+                <button class="difficulty-btn hard" onclick="setDifficulty('letter', 'hard')">Hard</button>
+            </div>
+            <div class="game-stats" id="letter-stats" style="display: none;">
+                <div class="score-display">⭐ Score: <span id="letter-score">0</span> / <span id="letter-target">5</span></div>
+                <div class="timer-display" id="letter-timer-container">⏱️ <span id="letter-timer">60</span>s</div>
+            </div>
             <div class="feedback" id="letter-feedback"></div>
             <div class="letter-display">
                 <h2>Find the letter:</h2>
@@ -679,6 +950,15 @@
         <!-- Shape Game -->
         <div id="shape-game" class="game-area">
             <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="difficulty-selector" id="shape-difficulty">
+                <button class="difficulty-btn easy" onclick="setDifficulty('shape', 'easy')">Easy</button>
+                <button class="difficulty-btn medium" onclick="setDifficulty('shape', 'medium')">Medium</button>
+                <button class="difficulty-btn hard" onclick="setDifficulty('shape', 'hard')">Hard</button>
+            </div>
+            <div class="game-stats" id="shape-stats" style="display: none;">
+                <div class="score-display">⭐ Score: <span id="shape-score">0</span> / <span id="shape-target">5</span></div>
+                <div class="timer-display" id="shape-timer-container">⏱️ <span id="shape-timer">60</span>s</div>
+            </div>
             <div class="feedback" id="shape-feedback"></div>
             <div class="shape-grid" id="shape-grid"></div>
         </div>
@@ -686,6 +966,15 @@
         <!-- Math Game -->
         <div id="math-game" class="game-area">
             <button class="back-btn" onclick="backToMenu()">← Back</button>
+            <div class="difficulty-selector" id="math-difficulty">
+                <button class="difficulty-btn easy" onclick="setDifficulty('math', 'easy')">Easy</button>
+                <button class="difficulty-btn medium" onclick="setDifficulty('math', 'medium')">Medium</button>
+                <button class="difficulty-btn hard" onclick="setDifficulty('math', 'hard')">Hard</button>
+            </div>
+            <div class="game-stats" id="math-stats" style="display: none;">
+                <div class="score-display">⭐ Score: <span id="math-score">0</span> / <span id="math-target">5</span></div>
+                <div class="timer-display" id="math-timer-container">⏱️ <span id="math-timer">60</span>s</div>
+            </div>
             <div class="feedback" id="math-feedback"></div>
             <div class="math-problem">
                 <h2 id="math-question">2 + 1 = ?</h2>
@@ -712,6 +1001,44 @@
         </div>
     </div>
 
+    <!-- Popup Overlays -->
+    <div class="popup-overlay" id="success-popup">
+        <div class="popup popup-success">
+            <div class="emoji">🎉</div>
+            <h2>Hooray!</h2>
+            <p>Great job!</p>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="error-popup">
+        <div class="popup popup-error">
+            <div class="emoji">💪</div>
+            <h2>Oops!</h2>
+            <p>It's okay, try again!</p>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="win-popup">
+        <div class="popup popup-win">
+            <div class="emoji">🏆</div>
+            <h2>You Win!</h2>
+            <p id="win-message">Amazing job!</p>
+            <button class="play-again-btn" onclick="playAgain()">Play Again!</button>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="lose-popup">
+        <div class="popup popup-lose">
+            <div class="emoji">⏰</div>
+            <h2>Time's Up!</h2>
+            <p id="lose-message">Good try! You got 0/5 correct.</p>
+            <button class="play-again-btn" onclick="playAgain()">Try Again!</button>
+        </div>
+    </div>
+
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confetti-container"></div>
+
     <script>
         // Audio Context for sound effects
         let soundContext = null;
@@ -721,6 +1048,152 @@
                 soundContext = new (window.AudioContext || window.webkitAudioContext)();
             }
             return soundContext;
+        }
+
+        // Game state management
+        let currentGame = null;
+        let gameScore = 0;
+        let gameTarget = 5;
+        let gameTimer = 60;
+        let timerInterval = null;
+        let gameActive = false;
+
+        // Difficulty settings: { time: seconds, target: correct answers needed }
+        const difficultySettings = {
+            easy: { time: 60, target: 5 },
+            medium: { time: 45, target: 8 },
+            hard: { time: 30, target: 10 }
+        };
+
+        // Set difficulty and start game
+        function setDifficulty(game, level) {
+            const settings = difficultySettings[level];
+            gameScore = 0;
+            gameTarget = settings.target;
+            gameTimer = settings.time;
+            currentGame = game;
+            gameActive = true;
+
+            // Update UI
+            document.getElementById(`${game}-difficulty`).style.display = 'none';
+            document.getElementById(`${game}-stats`).style.display = 'flex';
+            document.getElementById(`${game}-score`).textContent = gameScore;
+            document.getElementById(`${game}-target`).textContent = gameTarget;
+            document.getElementById(`${game}-timer`).textContent = gameTimer;
+
+            // Highlight selected difficulty
+            document.querySelectorAll(`#${game}-difficulty .difficulty-btn`).forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+
+            // Start timer
+            startTimer(game);
+
+            // Start the game
+            if (game === 'color') generateColorQuestion();
+            else if (game === 'number') generateNumberQuestion();
+            else if (game === 'letter') generateLetterQuestion();
+            else if (game === 'shape') generateShapeQuestion();
+            else if (game === 'math') generateMathQuestion();
+        }
+
+        // Start countdown timer
+        function startTimer(game) {
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                gameTimer--;
+                const timerEl = document.getElementById(`${game}-timer`);
+                const timerContainer = document.getElementById(`${game}-timer-container`);
+                timerEl.textContent = gameTimer;
+
+                // Visual warnings
+                if (gameTimer <= 10) {
+                    timerContainer.className = 'timer-display danger';
+                } else if (gameTimer <= 20) {
+                    timerContainer.className = 'timer-display warning';
+                } else {
+                    timerContainer.className = 'timer-display';
+                }
+
+                // Time's up!
+                if (gameTimer <= 0) {
+                    clearInterval(timerInterval);
+                    gameActive = false;
+                    showLosePopup();
+                }
+            }, 1000);
+        }
+
+        // Stop timer
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        // Update score and check for win
+        function addScore() {
+            gameScore++;
+            document.getElementById(`${currentGame}-score`).textContent = gameScore;
+
+            if (gameScore >= gameTarget) {
+                stopTimer();
+                gameActive = false;
+                showWinPopup();
+                return true;
+            }
+            return false;
+        }
+
+        // Show win popup
+        function showWinPopup() {
+            createConfetti();
+            const popup = document.getElementById('win-popup');
+            document.getElementById('win-message').textContent = `You got ${gameScore} correct in time!`;
+            popup.classList.add('show');
+            playWinSound();
+        }
+
+        // Show lose popup
+        function showLosePopup() {
+            const popup = document.getElementById('lose-popup');
+            document.getElementById('lose-message').textContent = `Good try! You got ${gameScore}/${gameTarget} correct.`;
+            popup.classList.add('show');
+        }
+
+        // Play again
+        function playAgain() {
+            document.getElementById('win-popup').classList.remove('show');
+            document.getElementById('lose-popup').classList.remove('show');
+
+            // Reset and show difficulty selector
+            document.getElementById(`${currentGame}-difficulty`).style.display = 'flex';
+            document.getElementById(`${currentGame}-stats`).style.display = 'none';
+            document.getElementById(`${currentGame}-timer-container`).className = 'timer-display';
+        }
+
+        // Play win sound (fanfare)
+        function playWinSound() {
+            const ctx = initSoundContext();
+            const now = ctx.currentTime;
+            const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98];
+
+            notes.forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.value = freq;
+                osc.type = 'triangle';
+                gain.gain.setValueAtTime(0, now + i * 0.1);
+                gain.gain.linearRampToValueAtTime(0.3, now + i * 0.1 + 0.05);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.4);
+                osc.start(now + i * 0.1);
+                osc.stop(now + i * 0.1 + 0.5);
+            });
         }
 
         // Speak with kid-like voice (higher pitch)
@@ -777,14 +1250,9 @@
                 osc.start(now + i * 0.08);
                 osc.stop(now + i * 0.08 + 0.4);
             });
-
-            // Kids saying "Yay!"
-            setTimeout(() => {
-                speakKidVoice("Yaaay!");
-            }, 200);
         }
 
-        // Play error sound (gentle tone + kids encouragement)
+        // Play error sound (gentle tone)
         function playErrorSound() {
             const ctx = initSoundContext();
             const now = ctx.currentTime;
@@ -805,11 +1273,6 @@
 
             osc.start(now);
             osc.stop(now + 0.3);
-
-            // Kids saying encouragement
-            setTimeout(() => {
-                speakKidVoice("It's okay! Try again!");
-            }, 150);
         }
 
         // Text-to-Speech function
@@ -841,18 +1304,57 @@
             }
         }
 
-        // Show feedback with animation
-        function showFeedback(elementId, message, isCorrect) {
-            const feedback = document.getElementById(elementId);
-            feedback.textContent = isCorrect ? '🎉 ' + message + ' 🎉' : message;
-            feedback.className = isCorrect ? 'feedback celebration' : 'feedback';
+        // Show success popup with confetti
+        function showSuccessPopup() {
+            createConfetti();
+            const popup = document.getElementById('success-popup');
+            popup.classList.add('show');
+            playSuccessSound();
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 700);
+        }
 
-            if (isCorrect) {
-                setTimeout(() => {
-                    feedback.textContent = '';
-                    feedback.className = 'feedback';
-                }, 2000);
+        // Show error popup
+        function showErrorPopup() {
+            const popup = document.getElementById('error-popup');
+            popup.classList.add('show');
+            playErrorSound();
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 600);
+        }
+
+        // Create confetti animation
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            container.innerHTML = '';
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#a8e6cf', '#ff6b9d', '#c7ceea', '#ffd93d', '#6c5ce7'];
+
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animation = `confettiFall ${Math.random() * 2 + 1.5}s ease-out forwards`;
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                container.appendChild(confetti);
             }
+
+            // Clean up confetti after animation
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 3000);
+        }
+
+        // Show instruction text
+        function showInstruction(elementId, text) {
+            const feedback = document.getElementById(elementId);
+            feedback.textContent = text;
+            feedback.className = 'feedback instruction';
         }
 
         // Game navigation
@@ -887,6 +1389,10 @@
         }
 
         function backToMenu() {
+            // Stop any active game
+            stopTimer();
+            gameActive = false;
+
             document.getElementById('menu').style.display = 'grid';
             document.getElementById('color-game').classList.remove('active');
             document.getElementById('number-game').classList.remove('active');
@@ -894,6 +1400,13 @@
             document.getElementById('shape-game').classList.remove('active');
             document.getElementById('math-game').classList.remove('active');
             document.getElementById('abc-video').classList.remove('active');
+
+            // Reset difficulty selectors and hide stats
+            ['color', 'number', 'letter', 'shape', 'math'].forEach(game => {
+                document.getElementById(`${game}-difficulty`).style.display = 'flex';
+                document.getElementById(`${game}-stats`).style.display = 'none';
+                document.getElementById(`${game}-timer-container`).className = 'timer-display';
+            });
 
             // Stop ABC video if it's playing
             if (abcInterval) {
@@ -904,8 +1417,6 @@
                 isPlaying = false;
                 stopABCSong();
             }
-
-            speak('Pick a game!');
         }
 
         // COLOR GAME
@@ -923,7 +1434,10 @@
         let targetColor = null;
 
         function initColorGame() {
-            generateColorQuestion();
+            // Show difficulty selector - game starts when user selects difficulty
+            document.getElementById('color-grid').innerHTML = '';
+            document.getElementById('color-feedback').textContent = 'Select a difficulty to start!';
+            document.getElementById('color-feedback').className = 'feedback instruction';
         }
 
         function generateColorQuestion() {
@@ -954,24 +1468,24 @@
                 grid.appendChild(box);
             });
 
-            setTimeout(() => speak(`Find the color ${targetColor.name}`), 500);
+            showInstruction('color-feedback', `Choose the color ${targetColor.name}!`);
         }
 
         function checkColorAnswer(answer, box) {
+            if (!gameActive) return;
+
             if (answer === targetColor.name) {
                 box.classList.add('correct');
-                playSuccessSound();
-                speak(`Yes! ${targetColor.name}! Great job!`);
-                showFeedback('color-feedback', 'Correct!', true);
-                setTimeout(() => {
-                    // Remove correct class before generating new question
-                    box.classList.remove('correct');
-                    generateColorQuestion();
-                }, 2000);
+                const won = addScore();
+                if (!won) {
+                    showSuccessPopup();
+                    setTimeout(() => {
+                        box.classList.remove('correct');
+                        if (gameActive) generateColorQuestion();
+                    }, 800);
+                }
             } else {
-                playErrorSound();
-                speak('Try again!');
-                showFeedback('color-feedback', 'Try again! 😊', false);
+                showErrorPopup();
             }
         }
 
@@ -981,7 +1495,10 @@
         let currentEmoji = '';
 
         function initNumberGame() {
-            generateNumberQuestion();
+            document.getElementById('objects-container').innerHTML = '';
+            document.getElementById('number-buttons').innerHTML = '';
+            document.getElementById('number-feedback').textContent = 'Select a difficulty to start!';
+            document.getElementById('number-feedback').className = 'feedback instruction';
         }
 
         function generateNumberQuestion() {
@@ -1010,20 +1527,23 @@
                 buttonsContainer.appendChild(btn);
             }
 
-            setTimeout(() => speak(`How many ${currentEmoji} do you see?`), 500);
+            showInstruction('number-feedback', `How many do you see? Count them!`);
         }
 
         function checkNumberAnswer(answer, button) {
+            if (!gameActive) return;
+
             if (answer === currentNumber) {
                 button.classList.add('correct');
-                playSuccessSound();
-                speak(`Yes! ${currentNumber}! Great job!`);
-                showFeedback('number-feedback', 'Correct!', true);
-                setTimeout(generateNumberQuestion, 2000);
+                const won = addScore();
+                if (!won) {
+                    showSuccessPopup();
+                    setTimeout(() => {
+                        if (gameActive) generateNumberQuestion();
+                    }, 800);
+                }
             } else {
-                playErrorSound();
-                speak('Try again!');
-                showFeedback('number-feedback', 'Try again! 😊', false);
+                showErrorPopup();
             }
         }
 
@@ -1032,7 +1552,10 @@
         let targetLetter = '';
 
         function initLetterGame() {
-            generateLetterQuestion();
+            document.getElementById('letter-buttons').innerHTML = '';
+            document.getElementById('target-letter').textContent = '?';
+            document.getElementById('letter-feedback').textContent = 'Select a difficulty to start!';
+            document.getElementById('letter-feedback').className = 'feedback instruction';
         }
 
         function generateLetterQuestion() {
@@ -1061,20 +1584,23 @@
                 buttonsContainer.appendChild(btn);
             });
 
-            setTimeout(() => speak(`Find the letter ${targetLetter}`), 500);
+            showInstruction('letter-feedback', `Find the letter ${targetLetter}!`);
         }
 
         function checkLetterAnswer(answer, button) {
+            if (!gameActive) return;
+
             if (answer === targetLetter) {
                 button.classList.add('correct');
-                playSuccessSound();
-                speak(`Excellent! ${targetLetter}!`);
-                showFeedback('letter-feedback', 'Amazing!', true);
-                setTimeout(generateLetterQuestion, 2000);
+                const won = addScore();
+                if (!won) {
+                    showSuccessPopup();
+                    setTimeout(() => {
+                        if (gameActive) generateLetterQuestion();
+                    }, 800);
+                }
             } else {
-                playErrorSound();
-                speak('Not quite! Try again!');
-                showFeedback('letter-feedback', 'Try again! 😊', false);
+                showErrorPopup();
             }
         }
 
@@ -1091,7 +1617,9 @@
         let targetShape = null;
 
         function initShapeGame() {
-            generateShapeQuestion();
+            document.getElementById('shape-grid').innerHTML = '';
+            document.getElementById('shape-feedback').textContent = 'Select a difficulty to start!';
+            document.getElementById('shape-feedback').className = 'feedback instruction';
         }
 
         function generateShapeQuestion() {
@@ -1119,23 +1647,24 @@
                 grid.appendChild(box);
             });
 
-            setTimeout(() => speak(`Find the ${targetShape.name}`), 500);
+            showInstruction('shape-feedback', `Find the ${targetShape.name}!`);
         }
 
         function checkShapeAnswer(answer, box) {
+            if (!gameActive) return;
+
             if (answer === targetShape.name) {
                 box.classList.add('correct');
-                playSuccessSound();
-                speak(`Perfect! ${targetShape.name}! Well done!`);
-                showFeedback('shape-feedback', 'Correct!', true);
-                setTimeout(() => {
-                    box.classList.remove('correct');
-                    generateShapeQuestion();
-                }, 2000);
+                const won = addScore();
+                if (!won) {
+                    showSuccessPopup();
+                    setTimeout(() => {
+                        box.classList.remove('correct');
+                        if (gameActive) generateShapeQuestion();
+                    }, 800);
+                }
             } else {
-                playErrorSound();
-                speak('Try again!');
-                showFeedback('shape-feedback', 'Try again! 😊', false);
+                showErrorPopup();
             }
         }
 
@@ -1146,7 +1675,10 @@
         let mathOperation = '+';
 
         function initMathGame() {
-            generateMathQuestion();
+            document.getElementById('math-buttons').innerHTML = '';
+            document.getElementById('math-question').textContent = '? + ? = ?';
+            document.getElementById('math-feedback').textContent = 'Select a difficulty to start!';
+            document.getElementById('math-feedback').className = 'feedback instruction';
         }
 
         function generateMathQuestion() {
@@ -1191,20 +1723,23 @@
                 buttonsContainer.appendChild(btn);
             });
 
-            setTimeout(() => speak(`What is ${num1} ${mathOperation === '+' ? 'plus' : 'minus'} ${num2}?`), 500);
+            showInstruction('math-feedback', `What is ${num1} ${mathOperation} ${num2}?`);
         }
 
         function checkMathAnswer(answer, button) {
+            if (!gameActive) return;
+
             if (answer === correctAnswer) {
                 button.classList.add('correct');
-                playSuccessSound();
-                speak(`Yes! ${correctAnswer}! Excellent!`);
-                showFeedback('math-feedback', 'Correct!', true);
-                setTimeout(generateMathQuestion, 2000);
+                const won = addScore();
+                if (!won) {
+                    showSuccessPopup();
+                    setTimeout(() => {
+                        if (gameActive) generateMathQuestion();
+                    }, 800);
+                }
             } else {
-                playErrorSound();
-                speak('Try again!');
-                showFeedback('math-feedback', 'Try again! 😊', false);
+                showErrorPopup();
             }
         }
 
@@ -1388,7 +1923,6 @@
                         setTimeout(() => {
                             isPlaying = false;
                             updatePlayButton();
-                            speak('Great job! You learned all your A B C\'s!');
                         }, 1000);
                     }
                 }
@@ -1412,9 +1946,8 @@
                 abcInterval = null;
             }
             stopABCSong();
-            displayLetter(0, false); // Don't speak on init
+            displayLetter(0, false);
             updatePlayButton();
-            setTimeout(() => speak('Let\'s learn the A B C\'s! Press play to start!'), 200);
         }
 
         function displayLetter(index, shouldSpeak = true) {
@@ -1438,13 +1971,6 @@
             // Update button states
             document.getElementById('abc-prev').disabled = index === 0;
             document.getElementById('abc-next').disabled = index === 25;
-
-            // Speak the letter and word only if shouldSpeak is true
-            if (shouldSpeak) {
-                setTimeout(() => {
-                    speak(`${data.letter}. ${data.letter} is for ${data.word}`);
-                }, 300);
-            }
         }
 
         function nextLetter() {
@@ -1483,9 +2009,9 @@
             }
         }
 
-        // Initial greeting
+        // Initial load - no voice greeting
         window.onload = () => {
-            speak('Welcome to Fun Learning! Pick a game!');
+            // App ready
         };
     </script>
 </body>
