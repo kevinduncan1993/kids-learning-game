@@ -1047,6 +1047,10 @@
             if (!soundContext) {
                 soundContext = new (window.AudioContext || window.webkitAudioContext)();
             }
+            // Resume audio context if suspended (required for mobile)
+            if (soundContext.state === 'suspended') {
+                soundContext.resume();
+            }
             return soundContext;
         }
 
@@ -1827,6 +1831,11 @@
         function playNote(frequency, duration) {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // Resume audio context if suspended (required for mobile)
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
             }
 
             const now = audioContext.currentTime;
