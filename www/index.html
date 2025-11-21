@@ -1997,6 +1997,15 @@
         }
 
         function togglePlay() {
+            // Initialize audio context on user tap (required for mobile)
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            // Resume if suspended (required for mobile)
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
             isPlaying = !isPlaying;
             updatePlayButton();
 
