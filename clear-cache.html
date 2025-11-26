@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Reading Game Cache</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            color: #6c5ce7;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .emoji {
+            font-size: 5em;
+            margin: 20px 0;
+        }
+        p {
+            font-size: 1.3em;
+            color: #636e72;
+            margin: 20px 0;
+        }
+        .success {
+            color: #00b894;
+            font-weight: bold;
+            font-size: 1.5em;
+            display: none;
+        }
+        button {
+            padding: 20px 40px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, #6c5ce7 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(108, 92, 231, 0.4);
+        }
+        .back-btn {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            padding: 15px 30px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">🔄</div>
+        <h1>Clear Reading Cache</h1>
+        <p>Click the button below to clear the reading game cache and load the new stories!</p>
+        <button onclick="clearCache()">Clear Cache</button>
+        <p class="success" id="success">✅ Cache Cleared! You can now close this page and reload your game.</p>
+        <button class="back-btn" onclick="window.location.href='index.html'">Back to Game</button>
+    </div>
+
+    <script>
+        function clearCache() {
+            // Clear reading game cache
+            localStorage.removeItem('reading_stories');
+            localStorage.removeItem('reading_stories_cache_time');
+
+            // Show success message
+            document.getElementById('success').style.display = 'block';
+
+            // Show confetti or celebration effect
+            document.querySelector('.emoji').textContent = '🎉';
+
+            console.log('Reading game cache cleared successfully!');
+        }
+    </script>
+</body>
+</html>

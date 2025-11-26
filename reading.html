@@ -1,0 +1,294 @@
+<!-- ====================================
+     READING GAME HTML TEMPLATES
+     ==================================== -->
+
+<!-- Reading Game Container -->
+<div id="reading-game" class="game-area">
+
+    <!-- Profile Selection Screen -->
+    <div id="reading-profile-select" class="reading-screen active">
+        <button class="back-btn" onclick="backToMenu()">← Back</button>
+
+        <div class="profile-header">
+            <h2>Who's Reading?</h2>
+            <p>Select your profile or create a new one</p>
+        </div>
+
+        <div class="profile-grid" id="profile-grid">
+            <!-- Profiles will be dynamically loaded here -->
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="back-btn" onclick="showParentDashboard()" style="background: #636e72;">
+                👨‍👩‍👧 Parent Dashboard
+            </button>
+        </div>
+    </div>
+
+    <!-- Story Library Screen -->
+    <div id="reading-library" class="reading-screen">
+        <button class="back-btn" onclick="showProfileSelect()">← Back</button>
+
+        <div class="library-header">
+            <h2>📚 Story Library</h2>
+            <div class="level-filter" id="level-filter">
+                <button class="level-filter-btn active" onclick="filterStories('all')" data-level="all">
+                    All Stories
+                </button>
+                <button class="level-filter-btn" onclick="filterStories('pre-k')" data-level="pre-k">
+                    Pre-K
+                </button>
+                <button class="level-filter-btn" onclick="filterStories('k')" data-level="k">
+                    Kindergarten
+                </button>
+                <button class="level-filter-btn" onclick="filterStories('grade-1')" data-level="grade-1">
+                    Grade 1
+                </button>
+                <button class="level-filter-btn" onclick="filterStories('grade-2')" data-level="grade-2">
+                    Grade 2
+                </button>
+                <button class="level-filter-btn" onclick="filterStories('grade-3')" data-level="grade-3">
+                    Grade 3
+                </button>
+            </div>
+        </div>
+
+        <div class="story-grid" id="story-grid">
+            <!-- Stories will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <!-- Story Detail Screen -->
+    <div id="reading-story-detail" class="reading-screen">
+        <button class="back-btn" onclick="showStoryLibrary()">← Back</button>
+
+        <div class="story-detail-container">
+            <div class="story-detail-cover" id="story-detail-cover">📖</div>
+            <h1 class="story-detail-title" id="story-detail-title">Story Title</h1>
+            <div class="story-detail-meta" id="story-detail-meta">
+                <span id="story-detail-level"></span> •
+                <span id="story-detail-words"></span> words •
+                <span id="story-detail-time"></span> min read
+            </div>
+            <p id="story-detail-description"></p>
+
+            <div class="reading-mode-selector">
+                <button class="mode-btn read-to-me-btn" onclick="startReading('read-to-me')" aria-label="Read this story aloud">
+                    🔊 Read to Me
+                </button>
+                <button class="mode-btn read-myself-btn" onclick="startReading('read-myself')" aria-label="Read this story by yourself">
+                    📖 Read by Myself
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reading View Screen -->
+    <div id="reading-view" class="reading-screen">
+        <div class="reading-view-container">
+            <div class="reading-top-bar">
+                <button class="back-btn" onclick="showStoryDetail()" style="margin: 0;">← Exit</button>
+                <div class="reading-progress-info" id="reading-progress-info">
+                    Page <span id="current-page-num">1</span> of <span id="total-pages-num">5</span>
+                </div>
+                <button class="reading-settings-btn" onclick="toggleSettingsPanel()" aria-label="Reading settings">
+                    ⚙️
+                </button>
+            </div>
+
+            <div class="story-page-card">
+                <div class="page-text" id="page-text">
+                    <!-- Page text with highlighted words will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <div class="audio-controls" id="audio-controls" style="display: none;">
+                <button class="audio-btn" id="play-pause-btn" onclick="toggleAudio()" aria-label="Play or pause narration">
+                    ▶ Play
+                </button>
+                <button class="audio-btn" onclick="restartAudio()" aria-label="Restart narration">
+                    🔄 Restart
+                </button>
+                <div class="speed-control">
+                    <label for="speed-slider">Speed:</label>
+                    <input type="range" id="speed-slider" class="speed-slider" min="0.5" max="2" step="0.1" value="1.0" onchange="changeSpeed(this.value)">
+                    <span id="speed-value">1.0x</span>
+                </div>
+            </div>
+
+            <div class="page-navigation">
+                <button class="nav-btn" id="prev-page-btn" onclick="previousPage()" disabled aria-label="Previous page">
+                    ← Previous
+                </button>
+                <button class="nav-btn" id="next-page-btn" onclick="nextPage()" aria-label="Next page">
+                    Next →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="reading-quiz" class="reading-screen">
+        <div class="quiz-container">
+            <button class="back-btn" onclick="showStoryLibrary()">← Skip Quiz</button>
+
+            <div class="quiz-progress" id="quiz-progress">
+                Question 1 of 3
+            </div>
+
+            <div class="quiz-question-card">
+                <div class="quiz-question" id="quiz-question">
+                    Where did the cat sit?
+                </div>
+
+                <div class="quiz-options" id="quiz-options">
+                    <!-- Quiz options will be dynamically loaded here -->
+                </div>
+
+                <div class="quiz-feedback" id="quiz-feedback">
+                    <!-- Feedback will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completion Celebration Screen -->
+    <div id="reading-complete" class="reading-screen">
+        <div class="completion-container">
+            <div class="completion-emoji" id="completion-emoji">🎉</div>
+            <h1 class="completion-title" id="completion-title">Great Job!</h1>
+
+            <div class="completion-stats">
+                <div class="stat-row">
+                    <span class="stat-label">📖 Story Completed</span>
+                    <span class="stat-value" id="completed-story-title">—</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">⏱️ Time Spent</span>
+                    <span class="stat-value" id="completed-time">—</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">✅ Comprehension</span>
+                    <span class="stat-value" id="completed-comprehension">—</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">🔥 Reading Streak</span>
+                    <span class="stat-value" id="completed-streak">—</span>
+                </div>
+            </div>
+
+            <div class="completion-actions">
+                <button class="nav-btn" onclick="showStoryLibrary()">
+                    📚 Read Another Story
+                </button>
+                <button class="nav-btn" onclick="backToMenu()">
+                    🏠 Back to Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Parent Dashboard Screen -->
+    <div id="parent-dashboard" class="reading-screen">
+        <button class="back-btn" onclick="showProfileSelect()">← Back</button>
+
+        <div class="dashboard-header">
+            <h2>👨‍👩‍👧 Parent Dashboard</h2>
+            <p>View reading progress and stats</p>
+        </div>
+
+        <div class="dashboard-profile-selector" id="dashboard-profile-selector">
+            <!-- Profile tabs will be dynamically loaded here -->
+        </div>
+
+        <div class="dashboard-stats-grid" id="dashboard-stats">
+            <!-- Stats cards will be dynamically loaded here -->
+        </div>
+
+        <div class="reading-history">
+            <h3>📚 Recent Reading History</h3>
+            <div class="history-list" id="history-list">
+                <!-- History items will be dynamically loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Word Detail Popup -->
+<div class="popup-overlay" id="word-detail-popup">
+    <div class="word-detail-popup">
+        <div class="word-emoji-large" id="word-emoji">📖</div>
+        <div class="word-text-large" id="word-text">Word</div>
+        <div class="word-phonics" id="word-phonics">/wərd/</div>
+        <div class="word-definition" id="word-definition">
+            A single unit of language that has meaning.
+        </div>
+        <button class="close-popup-btn" onclick="closeWordPopup()">
+            Got it!
+        </button>
+    </div>
+</div>
+
+<!-- Profile Creation Popup -->
+<div class="popup-overlay" id="profile-create-popup">
+    <div class="profile-create-modal">
+        <h3>Create New Profile</h3>
+        <input type="text"
+               id="profile-name-input"
+               class="profile-create-input"
+               placeholder="Enter name"
+               maxlength="20"
+               aria-label="Profile name">
+
+        <label class="setting-label">Choose an Avatar:</label>
+        <div class="avatar-selector" id="avatar-selector">
+            <div class="avatar-option" onclick="selectAvatar('🦄')" data-avatar="🦄">🦄</div>
+            <div class="avatar-option" onclick="selectAvatar('🐻')" data-avatar="🐻">🐻</div>
+            <div class="avatar-option" onclick="selectAvatar('🦊')" data-avatar="🦊">🦊</div>
+            <div class="avatar-option" onclick="selectAvatar('🐼')" data-avatar="🐼">🐼</div>
+            <div class="avatar-option" onclick="selectAvatar('🐨')" data-avatar="🐨">🐨</div>
+            <div class="avatar-option" onclick="selectAvatar('🦁')" data-avatar="🦁">🦁</div>
+            <div class="avatar-option" onclick="selectAvatar('🐯')" data-avatar="🐯">🐯</div>
+            <div class="avatar-option" onclick="selectAvatar('🐸')" data-avatar="🐸">🐸</div>
+            <div class="avatar-option" onclick="selectAvatar('🐶')" data-avatar="🐶">🐶</div>
+            <div class="avatar-option" onclick="selectAvatar('🐱')" data-avatar="🐱">🐱</div>
+            <div class="avatar-option" onclick="selectAvatar('🦝')" data-avatar="🦝">🦝</div>
+            <div class="avatar-option" onclick="selectAvatar('🦘')" data-avatar="🦘">🦘</div>
+        </div>
+
+        <button class="nav-btn" onclick="createProfile()" style="width: 100%; margin-top: 10px;">
+            Create Profile
+        </button>
+        <button class="back-btn" onclick="closeProfileCreatePopup()" style="width: 100%; margin-top: 10px;">
+            Cancel
+        </button>
+    </div>
+</div>
+
+<!-- Settings Panel Popup -->
+<div class="popup-overlay" id="settings-panel-popup">
+    <div class="settings-panel">
+        <h3>Reading Settings</h3>
+
+        <div class="setting-item">
+            <label class="setting-label">Font Size</label>
+            <div class="setting-buttons">
+                <button class="setting-btn" onclick="setFontSize('small')" data-size="small">Small</button>
+                <button class="setting-btn active" onclick="setFontSize('medium')" data-size="medium">Medium</button>
+                <button class="setting-btn" onclick="setFontSize('large')" data-size="large">Large</button>
+            </div>
+        </div>
+
+        <div class="setting-item">
+            <label class="setting-label">High Contrast Mode</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="high-contrast-toggle" onchange="toggleHighContrast(this.checked)">
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+
+        <button class="nav-btn" onclick="closeSettingsPanel()" style="width: 100%; margin-top: 20px;">
+            Close
+        </button>
+    </div>
+</div>
